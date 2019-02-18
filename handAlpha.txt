@@ -1,0 +1,231 @@
+// JavaScript
+// 2 functions that allow to use binary count as one hand code;
+// alphaToHand function convert an alphanumeric string into a series of fingers combination;
+// handToHalpha function traduces each fingers combination into an alphanumeric;
+// thumb are used as a shift to switch between alphabet and numbers;
+// to switch in number mode have to bend the first phalanx of the thumb;
+// shift = thumb 2;
+// "START" and "END" make easy and understandable a comunication;
+// "." and "_" can be easly used for morse code;
+// Giuseppe Locanto;
+// gplocanto@gmail.com
+
+
+
+var base = 2;
+
+ var alpha = [0, "a", "b", "c", "d", "e", "f", "g", "h", "i", "j", "k", "l", "m", "n", "o", "p", "q", "r", "s", "t", "u", "v", "w", "x", "y", "z", "?", "_", ".", "START", "END"];
+ var shiftedAlpha = ["0", "1", "2", "3", "4", "5", "6", "7", "8", "9", "+", "-", "*", "/"];
+
+ var output = [];
+ var output2 = [];
+ var intArr =[];
+
+ function alphaToHand(str)
+ {
+   for(var i = 0; i < str.length; i++)
+   {
+     for(var x = 0; x < alpha.length; x++)
+     {
+       if(str[i] == alpha[x])
+       {
+         intArr.push(["ua", x]);  
+       }
+     }
+     for(var k = 0; k < shiftedAlpha.length; k++)
+     {
+       if(str[i] == shiftedAlpha[k])
+       {
+         intArr.push(["sa", k]);
+       }
+     }
+     output.push(intArr[i]);
+   }
+   
+   intArr.unshift(["ua", 30])
+   intArr.push(["ua", 31]);
+
+    for(var j = 0; j < intArr.length; j++)
+   { 
+     var y = [["thu", 0], ["ind", 0], ["mid", 0], ["rin", 0], ["pin", 0]];
+     if(intArr[j][0] == "ua")
+     { 
+       var po = Math.pow(base, 0);
+       var id = Math.pow(base, 1);
+       var me = Math.pow(base, 2);
+       var an = Math.pow(base, 3);
+       var mi = Math.pow(base, 4);
+       
+       var l = intArr[j][1];
+       for(var ipo = 0; l - po >= 0;)
+         {
+           for(var iid = 0; l - id >= 0;)
+           {
+             for(var ime = 0; l - me >= 0;)
+             {
+               for(var ian = 0; l - an >= 0;)
+               {
+                 for(var imi = 0; l - mi >= 0;)
+                 {
+                   l -= mi;
+                   imi++;
+                   y[4][1] = imi;
+                 }
+
+                 if(l - an >= 0)
+                 {
+                   l -= an;
+                   ian++;
+                   y[3][1] = ian;
+                 }
+               }
+
+               if(l - me >= 0)
+               {
+                 l -= me;
+                 ime++;
+                 y[2][1] = ime;
+               }
+             }
+
+             if(l - id >= 0)
+             {
+               l -= id;
+               iid++;
+               y[1][1] = iid;
+             }
+           }
+
+           if(l - po == 0)
+           {
+             l -= po;
+             ipo++;
+             y[0][1] = ipo;
+           }
+           else
+           {
+             y[0][1] = ipo;
+           }
+           
+     }
+     output2.push([y]);
+     }
+     if(intArr[j][0] == "sa")
+     {
+       var po = 2;
+       var id = Math.pow(base, 0);
+       var me = Math.pow(base, 1);
+       var an = Math.pow(base, 2);
+       var mi = Math.pow(base, 3);
+       
+       y[0][1] = po;
+       var m = intArr[j][1];
+
+       for(var iid = 0; m - id >= 0;)
+           {
+             for(var ime = 0; m - me >= 0;)
+             {
+               for(var ian = 0; m - an >= 0;)
+               {
+                 for(var imi = 0; m - mi >= 0;)
+                 {
+                   m -= mi;
+                   imi++;
+                   y[4][1] = imi;
+                 }
+
+                 if(m - an >= 0)
+                 {
+                   m -= an;
+                   ian++;
+                   y[3][1] = ian;
+                 }
+               }
+
+               if(m - me >= 0)
+               {
+                 m -= me;
+                 ime++;
+                 y[2][1] = ime;
+               }
+             }
+
+             if(m - id == 0)
+             {
+               m -= id;
+               iid++;
+               y[1][1] = iid;
+             }
+             else{
+               y[1][1] = iid;
+             }
+           }
+
+      output2.push(y);
+     }
+  }
+   output.unshift(alpha[30]);
+   output.push(alpha[31]);
+   console.log(output);
+   console.log(output2);
+ }
+
+// Here you can test conversion of a string in fingers combination;
+// it will auto add "START" and "STOP";
+ 
+ alphaToHand("");
+
+
+function handToAlpha(a, b, c, d, e)
+ {
+   var x = 0;
+   if(a !== 2)
+   {
+     if(e == 1)
+     {
+       x += 16;
+     }
+     if(d == 1)
+     {
+       x += 8;
+     }
+     if(c == 1)
+     {
+       x += 4;
+     }
+     if(b == 1)
+     {
+       x += 2;
+     }
+     if(a == 1)
+     {
+       x += 1;
+     }
+     console.log(alpha[x]);
+   }
+   else
+   {
+     if(e == 1)
+     {
+       x += 8;
+     }
+     if(d == 1)
+     {
+       x += 4;
+     }
+     if(c == 1)
+     {
+       x += 2;
+     }
+     if(b == 1)
+     {
+       x += 1;
+     }
+     console.log(shiftedAlpha[x]);
+   }
+ }
+
+// Here you can traslate each finger gesture into a char or a number;
+
+ handToAlpha(0, 0, 0, 0, 0);
+

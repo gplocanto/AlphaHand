@@ -1,0 +1,76 @@
+// a simple function
+// to learn how to count 
+// on your hand in binary 
+// from 0 to 31
+// by Giuseppe Locanto
+// gplocanto@gmail.com
+
+var base = 2;
+var p = Math.pow(base, 0);
+var i = Math.pow(base, 1);
+var m = Math.pow(base, 2);
+var a = Math.pow(base, 3);
+var mi = Math.pow(base, 4);
+
+function oneHandCount(num)
+{
+  var x = num;
+  var y = [["pollice", 0], ["indice", 0], ["medio", 0], ["anulare", 0], ["mignolo", 0]];
+  if(num > 0 && num < 32)
+  {
+    for(var ip = 0; x - p >= 0;)
+    {
+      for(var ii = 0; x - i >= 0;)
+      {
+        for(var im = 0; x - m >= 0;)
+        {
+          for(var ia = 0; x - a >= 0;)
+          {
+            for(var imi = 0; x - mi >= 0;)
+            {
+              x -= mi;
+              imi++;
+              y[4][1] = imi;
+            }
+            if(x - a >= 0)
+            {
+              x -= a;
+              ia++;
+              y[3][1] = ia;
+            }
+          }
+          if(x - m >= 0)
+          {
+            x -= m;
+            im++;
+            y[2][1] = im;
+          }
+        }
+        if(x - i >= 0)
+        {
+          x -= i;
+          ii++;
+          y[1][1] = ii;
+        }
+      }
+      if(x - p == 0)
+      {
+        x -= p;
+        ip++;
+        y[0][1] = ip;
+      }
+    }
+  console.log(y);    
+  }
+  else if(num == 0)
+  {
+    console.log("no fingers needed");
+  }
+  else
+  {
+    console.log("how many fingers u have on one hand?");
+  }
+}
+
+
+oneHandCount(6); //to test the function
